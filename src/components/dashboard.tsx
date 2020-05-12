@@ -1,21 +1,18 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Drawer from '@material-ui/core/Drawer';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMore from '@material-ui/icons/expandMore';
 import MyDrawer from './mydrawer';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const drawerWidth = "240px";
 
@@ -41,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   interaction: {
-    height: 100,
     padding: theme.spacing(2),
     backgroundColor: "#FFD78C",
     display: 'flex',
@@ -105,6 +101,13 @@ const Dashboard = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedType, setSelectedType] = React.useState(0);
 
+  const [endDate, setEndDate] = React.useState(new Date("05/12/2020"));
+  const [startDate, setStartDate] = React.useState(new Date("03/22/2020"));
+  
+  const maxValue = 51;
+  const [sliderValue, setSliderValue] = React.useState<number>(maxValue);
+  const [prevValue, setPrevValue] = React.useState<number>(maxValue);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -113,6 +116,25 @@ const Dashboard = () => {
     setSelectedType(index);
     setAnchorEl(null);
   }
+
+  const handleSliderChange = (event: any, newValue: number) => {
+    setSliderValue(newValue);
+  };
+
+  const handleSliderStop = (event: any, value: number) => {
+
+    console.log("Current value is: " + value);
+    console.log("Previous value is: " + prevValue);
+
+    let diff = prevValue - value;
+    let newDate = new Date(endDate);
+    let dateValue = 0;
+    dateValue = newDate.getDate() - diff;
+    newDate.setDate(dateValue);
+    setEndDate(newDate);
+    setPrevValue(value);
+
+  };
 
   return (
     <div className={classes.root}>
@@ -181,15 +203,18 @@ const Dashboard = () => {
               </Grid>
 
               {/* Slider */}
-              <Grid item xs={12} spacing={3}>
+              <Grid item xs={12}>
                 <Paper className={classes.interaction}>
                   <Box style={{width: '60%', marginRight: 30}}>
                     <Typography id="timeslider" gutterBottom>Select timeframe:</Typography>
                     <StyledSlider
-                      defaultValue={80}            
+                      value={sliderValue}            
                       aria-labelledby="timeslider"
                       step={1}
                       valueLabelDisplay="auto"
+                      max={maxValue}
+                      onChange={handleSliderChange}
+                      onChangeCommitted={handleSliderStop}
                     >
                     </StyledSlider>
                   </Box>
@@ -221,6 +246,14 @@ const Dashboard = () => {
                         </MenuItem>
                       ))}
                     </Menu>
+                  </Box>
+                  <Box>
+                    <Typography>
+                      Start date: {startDate.toDateString()}
+                    </Typography>
+                    <Typography>
+                      End date: {endDate.toDateString()}
+                    </Typography>
                   </Box>
                 </Paper>
               </Grid>
