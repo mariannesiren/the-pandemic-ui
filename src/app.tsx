@@ -7,16 +7,17 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
       font-family: 'Ubuntu', sans-serif;
       font-weight: 400;
-      background: #e8e6ef;
+      background: #ebeeff;
       padding: 2rem;
     }
 `;
 
 const App = () => {
+
   return (
     <>
       <Dashboard />
-      <GlobalStyle />
+      {/*<GlobalStyle />*/}
     </>
   );
 };
