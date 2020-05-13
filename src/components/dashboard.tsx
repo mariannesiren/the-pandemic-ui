@@ -5,23 +5,17 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMore from '@material-ui/icons/expandMore';
-import MyDrawer from './mydrawer';
 import WorldMap from './worldmap';
 import TopCountries from './top-countries';
 import InfoBox from './infobox';
 import KeyNumbers from './keynumbers';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    backgroundColor: '#EBEEFF',
-  },
   content: {
     flexGrow: 1,
     height: '100vh',
@@ -121,9 +115,6 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <MyDrawer />
       <main className={classes.content}>
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
@@ -210,7 +201,6 @@ const Dashboard = () => {
           </Grid>
         </Container>
       </main>
-    </div>
   );
 };
 
