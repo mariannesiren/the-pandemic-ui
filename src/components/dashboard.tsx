@@ -12,10 +12,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMore from '@material-ui/icons/expandMore';
 import MyDrawer from './mydrawer';
+import WorldMap from './worldmap';
+import TopCountries from './top-countries';
+import InfoBox from './infobox';
+import KeyNumbers from './keynumbers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    backgroundColor: '#EBEEFF',
   },
   content: {
     flexGrow: 1,
@@ -26,29 +31,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
   },
-  keynumber: {
-    height: 150,
-    padding: theme.spacing(2),
-  },
-  map: {
-    height: 500,
-    padding: theme.spacing(2),
-  },
   interaction: {
     padding: theme.spacing(2),
     backgroundColor: '#FFD78C',
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-  },
-  info: {
-    height: '100%',
-    padding: theme.spacing(2),
-    backgroundColor: '#CCD4FF',
-  },
-  topCountries: {
-    height: '100%',
-    padding: theme.spacing(2),
   },
   typebutton: {
     backgroundColor: '#FFA600',
@@ -139,7 +127,7 @@ const Dashboard = () => {
       <main className={classes.content}>
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
-            {/* Center map etc*/}
+            {/* Keynumber and map*/}
             <Grid
               item
               container
@@ -147,37 +135,11 @@ const Dashboard = () => {
               spacing={3}
               style={{ margin: 0, padding: 0 }}
             >
-              {/* Key numbers */}
-              <Grid item xs={3}>
-                <Paper className={classes.keynumber}>
-                  <Typography>Active</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.keynumber}>
-                  <Typography>Confirmed</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.keynumber}>
-                  <Typography>Recovered</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper className={classes.keynumber}>
-                  <Typography>Dead</Typography>
-                </Paper>
-              </Grid>
-
-              {/* Map */}
-              <Grid item xs={12}>
-                <Paper className={classes.map}>
-                  <Typography>Kartta</Typography>
-                </Paper>
-              </Grid>
+              <KeyNumbers />
+              <WorldMap />
             </Grid>
 
-            {/* Right side */}
+            {/* InfoBox and top 15 countries */}
             <Grid
               item
               container
@@ -185,19 +147,11 @@ const Dashboard = () => {
               spacing={3}
               style={{ margin: 0, padding: 0 }}
             >
-              <Grid item xs={12}>
-                <Paper className={classes.info}>
-                  <Typography>Did you know?</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper className={classes.topCountries}>
-                  <Typography>Most cases per 1M people</Typography>
-                </Paper>
-              </Grid>
+              <InfoBox />
+              <TopCountries />
             </Grid>
 
-            {/* Slider */}
+            {/* Interactions */}
             <Grid item xs={12}>
               <Paper className={classes.interaction}>
                 <Box style={{ width: '60%', marginRight: 30 }}>
