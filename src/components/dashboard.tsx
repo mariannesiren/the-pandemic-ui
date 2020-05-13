@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   interaction: {
     padding: theme.spacing(2),
-    backgroundColor: "#FFD78C",
+    backgroundColor: '#FFD78C',
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   typebutton: {
-    backgroundColor: "#FFA600",
-    color: "#fff",
+    backgroundColor: '#FFA600',
+    color: '#fff',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-  }
+  },
 }));
 
 const StyledSlider = withStyles({
@@ -88,19 +88,17 @@ const StyledSlider = withStyles({
   },
 })(Slider);
 
-
 const options = ['Active', 'Confirmed', 'Recovered', 'Dead'];
 
 const Dashboard = () => {
-
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedType, setSelectedType] = React.useState(0);
 
-  const [endDate, setEndDate] = React.useState(new Date("05/12/2020"));
-  const [startDate, setStartDate] = React.useState(new Date("03/22/2020"));
-  
+  const [endDate, setEndDate] = React.useState(new Date('05/12/2020'));
+  const [startDate, setStartDate] = React.useState(new Date('03/22/2020'));
+
   const maxValue = 51;
   const [sliderValue, setSliderValue] = React.useState<number>(maxValue);
   const [prevValue, setPrevValue] = React.useState<number>(maxValue);
@@ -109,19 +107,21 @@ const Dashboard = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
+  const handleItemClick = (
+    event: React.MouseEvent<HTMLElement>,
+    index: number
+  ) => {
     setSelectedType(index);
     setAnchorEl(null);
-  }
+  };
 
   const handleSliderChange = (event: any, newValue: number) => {
     setSliderValue(newValue);
   };
 
   const handleSliderStop = (event: any, value: number) => {
-
-    console.log("Current value is: " + value);
-    console.log("Previous value is: " + prevValue);
+    console.log('Current value is: ' + value);
+    console.log('Previous value is: ' + prevValue);
 
     let diff = prevValue - value;
     let newDate = new Date(endDate);
@@ -130,7 +130,6 @@ const Dashboard = () => {
     newDate.setDate(dateValue);
     setEndDate(newDate);
     setPrevValue(value);
-
   };
 
   return (
@@ -138,125 +137,124 @@ const Dashboard = () => {
       <CssBaseline />
       <MyDrawer />
       <main className={classes.content}>
-          <Container className={classes.container}>
-            <Grid container spacing={3} style={{ margin: 0 }}>
-              {/* Center map etc*/}
-              <Grid
-                item
-                container
-                xs={9}
-                spacing={3}
-                style={{ margin: 0, padding: 0 }}
-              >
-                {/* Key numbers */}
-                <Grid item xs={3}>
-                  <Paper className={classes.keynumber}>
-                    <Typography>Active</Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                  <Paper className={classes.keynumber}>
-                    <Typography>Confirmed</Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                  <Paper className={classes.keynumber}>
-                    <Typography>Recovered</Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={3}>
-                  <Paper className={classes.keynumber}>
-                    <Typography>Dead</Typography>
-                  </Paper>
-                </Grid>
-
-                {/* Map */}
-                <Grid item xs={12}>
-                  <Paper className={classes.map}>
-                    <Typography>Kartta</Typography>
-                  </Paper>
-                </Grid>
-
+        <Container className={classes.container}>
+          <Grid container spacing={3} style={{ margin: 0 }}>
+            {/* Center map etc*/}
+            <Grid
+              item
+              container
+              xs={9}
+              spacing={3}
+              style={{ margin: 0, padding: 0 }}
+            >
+              {/* Key numbers */}
+              <Grid item xs={3}>
+                <Paper className={classes.keynumber}>
+                  <Typography>Active</Typography>
+                </Paper>
               </Grid>
-
-              {/* Right side */}
-              <Grid
-                item
-                container
-                xs={3}
-                spacing={3}
-                style={{ margin: 0, padding: 0 }}
-              >
-                <Grid item xs={12}>
-                  <Paper className={classes.info}>
-                    <Typography>Did you know?</Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                  <Paper className={classes.topCountries}>
-                    <Typography>Most cases per 1M people</Typography>
-                  </Paper>
-                </Grid>
+              <Grid item xs={3}>
+                <Paper className={classes.keynumber}>
+                  <Typography>Confirmed</Typography>
+                </Paper>
               </Grid>
-
-              {/* Slider */}
-              <Grid item xs={12}>
-                <Paper className={classes.interaction}>
-                  <Box style={{width: '60%', marginRight: 30}}>
-                    <Typography id="timeslider" gutterBottom>Select timeframe:</Typography>
-                    <StyledSlider
-                      value={sliderValue}            
-                      aria-labelledby="timeslider"
-                      step={1}
-                      valueLabelDisplay="auto"
-                      max={maxValue}
-                      onChange={handleSliderChange}
-                      onChangeCommitted={handleSliderStop}
-                    >
-                    </StyledSlider>
-                  </Box>
-                  <Box>
-                    <Typography id="typeselection" gutterBottom>Select case type:</Typography>
-                    <Button 
-                      aria-controls="typemenu" 
-                      aria-labelledby="typeselection"
-                      aria-haspopup="true"
-                      onClick={handleClick}
-                      className={classes.typebutton}
-                      endIcon={<ExpandMore />}
-                    >
-                      {options[selectedType]}
-                    </Button>
-                    <Menu
-                      id="typemenu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                    >
-                      {options.map((option, index) => (
-                        <MenuItem
-                          key={option}
-                          selected={index === selectedType}
-                          onClick={(event) => handleItemClick(event, index)}
-                        >
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </Box>
-                  <Box>
-                    <Typography>
-                      Start date: {startDate.toDateString()}
-                    </Typography>
-                    <Typography>
-                      End date: {endDate.toDateString()}
-                    </Typography>
-                  </Box>
+              <Grid item xs={3}>
+                <Paper className={classes.keynumber}>
+                  <Typography>Recovered</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={3}>
+                <Paper className={classes.keynumber}>
+                  <Typography>Dead</Typography>
                 </Paper>
               </Grid>
 
+              {/* Map */}
+              <Grid item xs={12}>
+                <Paper className={classes.map}>
+                  <Typography>Kartta</Typography>
+                </Paper>
+              </Grid>
             </Grid>
-          </Container>
+
+            {/* Right side */}
+            <Grid
+              item
+              container
+              xs={3}
+              spacing={3}
+              style={{ margin: 0, padding: 0 }}
+            >
+              <Grid item xs={12}>
+                <Paper className={classes.info}>
+                  <Typography>Did you know?</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper className={classes.topCountries}>
+                  <Typography>Most cases per 1M people</Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+
+            {/* Slider */}
+            <Grid item xs={12}>
+              <Paper className={classes.interaction}>
+                <Box style={{ width: '60%', marginRight: 30 }}>
+                  <Typography id="timeslider" gutterBottom>
+                    Select timeframe:
+                  </Typography>
+                  <StyledSlider
+                    value={sliderValue}
+                    aria-labelledby="timeslider"
+                    step={1}
+                    valueLabelDisplay="auto"
+                    max={maxValue}
+                    onChange={handleSliderChange}
+                    onChangeCommitted={handleSliderStop}
+                  ></StyledSlider>
+                </Box>
+                <Box>
+                  <Typography id="typeselection" gutterBottom>
+                    Select case type:
+                  </Typography>
+                  <Button
+                    aria-controls="typemenu"
+                    aria-labelledby="typeselection"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    className={classes.typebutton}
+                    endIcon={<ExpandMore />}
+                  >
+                    {options[selectedType]}
+                  </Button>
+                  <Menu
+                    id="typemenu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                  >
+                    {options.map((option, index) => (
+                      <MenuItem
+                        key={option}
+                        selected={index === selectedType}
+                        onClick={(event) => handleItemClick(event, index)}
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+                <Box>
+                  <Typography>
+                    Start date: {startDate.toDateString()}
+                  </Typography>
+                  <Typography>End date: {endDate.toDateString()}</Typography>
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
       </main>
     </div>
   );

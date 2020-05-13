@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -39,42 +38,41 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textAlign: 'center',
   },
-  
 }));
 
-const MyDrawer = () => { 
+const MyDrawer = () => {
   const classes = useStyles();
- 
-  return (
 
+  return (
     <Drawer
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper, // Nested classnames
-        }}
-        open={true}
+      variant="permanent"
+      classes={{
+        paper: classes.drawerPaper, // Nested classnames
+      }}
+      open={true}
+    >
+      <Typography variant="h5" className={classes.mainheading}>
+        The Pandemic
+      </Typography>
+      <Typography
+        variant="body2"
+        align="center"
+        className={classes.menutext}
+        paragraph
       >
-        <Typography variant="h5" className={classes.mainheading}>The Pandemic</Typography>
-        <Typography 
-          variant="body2" 
-          align='center' 
-          className={classes.menutext}
-          paragraph
-        >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-          sed do eiusmod tempor incididunt ut ero labore et dolore magna aliqua. 
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-        </Typography>   
-        <List>
-          <ListItem button className={classes.menubutton}>
-            <ListItemText>Home</ListItemText>
-          </ListItem>
-          <ListItem button className={classes.menubutton}>
-            <ListItemText>Countries</ListItemText>
-          </ListItem>
-        </List>
-      </Drawer>
-      
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut ero labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco.
+      </Typography>
+      <List>
+        <ListItem button className={classes.menubutton}>
+          <ListItemText>Home</ListItemText>
+        </ListItem>
+        <ListItem button className={classes.menubutton}>
+          <ListItemText>Countries</ListItemText>
+        </ListItem>
+      </List>
+    </Drawer>
   );
 };
 export default MyDrawer;
