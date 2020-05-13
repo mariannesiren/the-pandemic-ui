@@ -11,19 +11,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const KeyNumbers = () => {
-
-  const types = ['Active', 'Confirmed', 'Recovered', 'Dead'];
+const KeyNumbers = ({
+  types,
+}: {
+  types: { name: string; description: string }[];
+}) => {
   const classes = useStyles();
   return (
     <>
-      {types.map((type, index) => 
-        <Grid item xs={3} key={type + index}>
+      {types.map((type, index) => (
+        <Grid item xs={3} key={type.name + index}>
           <Paper className={classes.container}>
-            <Typography>{type}</Typography>
+            <Typography>{type.name}</Typography>
           </Paper>
         </Grid>
-      )}
+      ))}
     </>
   );
 };
