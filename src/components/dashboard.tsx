@@ -14,7 +14,6 @@ import ExpandMore from '@material-ui/icons/expandMore';
 import MyDrawer from './mydrawer';
 import Tooltip from '@material-ui/core/Tooltip';
 
-const drawerWidth = "240px";
 
 const useStyles = makeStyles((theme) => ({
   root: {
