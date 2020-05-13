@@ -44,6 +44,17 @@ const Dashboard = () => {
   const [sliderValue, setSliderValue] = React.useState<number>(maxValue);
   const [prevValue, setPrevValue] = React.useState<number>(maxValue);
 
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('http://167.172.186.109:8080/api/all')
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      });
+  }, []);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
