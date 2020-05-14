@@ -40,24 +40,51 @@ const Dashboard = () => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selectedType, setSelectedType] = React.useState(0);
+  const [selectedType, setSelectedType] = React.useState<number>(0);
 
-  const [lastDate, setLastDate] = React.useState(new Date('05/12/2020'));
-  const [endDate, setEndDate] = React.useState(lastDate);
-  const [startDate, setStartDate] = React.useState(new Date('03/22/2020'));
+  // Last date of data we have
+  const [maxDateOfTimeFrame, setMaxDateOfTimeFrame] = React.useState<Date>(
+    new Date()
+  );
+  // End date of timeframe user selects (defaults to max possible date)
+  const [endDate, setEndDate] = React.useState<Date>(maxDateOfTimeFrame);
+  // Start date of data and start date of timeframe (not possible to change)
+  const [startDate, setStartDate] = React.useState<Date>(new Date());
 
-  const maxValue = 51;
-  const [sliderValue, setSliderValue] = React.useState<number>(maxValue);
-  const [prevValue, setPrevValue] = React.useState<number>(maxValue);
+  // The maximum value between start and end date
+  const [maxValueOfSlider, setMaxValueOfSlider] = React.useState<number>(0);
+  // The value between start and end date that user selects from timeframe (defaults to max)
+  const [sliderValue, setSliderValue] = React.useState<number>(
+    maxValueOfSlider
+  );
+  // Previous value of the slider
+  const [prevValue, setPrevValue] = React.useState<number>(maxValueOfSlider);
 
-  const [data, setData] = React.useState([]);
+  const [coronaData, setCoronaData] = React.useState<[]>([]);
 
   React.useEffect(() => {
     fetch('http://167.172.186.109:8080/api/all')
       .then((response) => response.json())
       .then((data) => {
-        setData(data);
-        console.log(data);
+        const lastDate = new Date(data[data.length - 1].date);
+        setMaxDateOfTimeFrame(lastDate);
+
+        const firstDate = new Date(data[0].date);
+        setStartDate(firstDate);
+
+        // To calculate the time difference of two dates
+        const differenceBetweenStartAndEndDate =
+          lastDate.getTime() - firstDate.getTime();
+
+        // To calculate the no. of days between two dates
+        const differenceInDays = Math.round(
+          differenceBetweenStartAndEndDate / (1000 * 3600 * 24)
+        );
+
+        setMaxValueOfSlider(differenceInDays);
+        setSliderValue(differenceInDays);
+        setPrevValue(differenceInDays);
+        setCoronaData(data);
       });
   }, []);
 
@@ -89,26 +116,28 @@ const Dashboard = () => {
 
   return (
     <main className={classes.content}>
-      <Container className={classes.container}>
-        <Grid container spacing={3} style={{ margin: 0 }}>
-          <KeyNumbersAndMap options={options} />
-          <InfoBoxAndTopCountries />
-          <InteractionsSection
-            options={options}
-            sliderValue={sliderValue}
-            maxValue={maxValue}
-            handleSliderChange={handleSliderChange}
-            handleSliderStop={handleSliderStop}
-            handleClick={handleClick}
-            handleItemClick={handleItemClick}
-            anchorEl={anchorEl}
-            startDate={startDate}
-            endDate={endDate}
-            lastDate={lastDate}
-            selectedType={selectedType}
-          />
-        </Grid>
-      </Container>
+      {coronaData.length > 0 && (
+        <Container className={classes.container}>
+          <Grid container spacing={3} style={{ margin: 0 }}>
+            <KeyNumbersAndMap options={options} />
+            <InfoBoxAndTopCountries />
+            <InteractionsSection
+              options={options}
+              sliderValue={sliderValue}
+              maxValue={maxValueOfSlider}
+              handleSliderChange={handleSliderChange}
+              handleSliderStop={handleSliderStop}
+              handleClick={handleClick}
+              handleItemClick={handleItemClick}
+              anchorEl={anchorEl}
+              startDate={startDate}
+              endDate={endDate}
+              lastDate={maxDateOfTimeFrame}
+              selectedType={selectedType}
+            />
+          </Grid>
+        </Container>
+      )}
     </main>
   );
 };
