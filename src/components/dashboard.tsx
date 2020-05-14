@@ -36,6 +36,30 @@ const options = [
   { name: 'Dead', description: 'Kuvaus kuolleista' },
 ];
 
+const getObjectByDate = (
+  coronaData: {
+    active: number;
+    confirmed: number;
+    country: string;
+    date: string;
+    deaths: number;
+    recovered: number;
+  }[],
+  endDate: Date
+) => {
+  const year = endDate.getFullYear();
+  const month = endDate.getMonth();
+  const day = endDate.getDate();
+  const formattedMonth = month < 10 ? `0${month + 1}` : `${month + 1}`;
+
+  const parsedDate = `${year}-${formattedMonth}-${day}`;
+  console.log('endDate', endDate);
+  console.log('coronaData', coronaData);
+
+  const newArray = coronaData.filter((data) => data.date.includes(parsedDate));
+  console.log('newArray', newArray);
+};
+
 const Dashboard = () => {
   const classes = useStyles();
 
@@ -66,6 +90,7 @@ const Dashboard = () => {
     fetch('http://167.172.186.109:8080/api/all')
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const lastDate = new Date(data[data.length - 1].date);
         setMaxDateOfTimeFrame(lastDate);
 
@@ -85,6 +110,8 @@ const Dashboard = () => {
         setSliderValue(differenceInDays);
         setPrevValue(differenceInDays);
         setCoronaData(data);
+
+        getObjectByDate(data, endDate);
       });
   }, []);
 
