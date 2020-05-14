@@ -85,7 +85,7 @@ const TimeFrame = ({
   anchorEl: null | HTMLElement;
   startDate: Date;
   endDate: Date;
-  lastDate: Date,
+  lastDate: Date;
   selectedType: number;
 }) => {
   const classes = useStyles();
@@ -93,7 +93,7 @@ const TimeFrame = ({
   return (
     <>
       <Paper className={classes.interaction}>
-        <Grid item container xs={9} style={{marginRight: '25px'}}>
+        <Grid item container xs={9} style={{ marginRight: '25px' }}>
           <Grid item xs={12}>
             <Typography id="timeslider" gutterBottom>
               Select timeframe:
@@ -109,7 +109,7 @@ const TimeFrame = ({
             ></StyledSlider>
           </Grid>
           <Grid item xs={12}>
-            <Box display='flex'>
+            <Box display="flex">
               <Box flexGrow={1}>
                 <Typography className={classes.sliderdate}>
                   {startDate.toDateString()}
@@ -119,13 +119,13 @@ const TimeFrame = ({
                 <Typography className={classes.sliderdate}>
                   {lastDate.toDateString()}
                 </Typography>
-              </Box>           
+              </Box>
             </Box>
             <Typography>Selected: {endDate.toDateString()}</Typography>
           </Grid>
         </Grid>
         <Grid item container xs={3}>
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             <Typography id="typeselection" gutterBottom>
               Select case type:
             </Typography>
