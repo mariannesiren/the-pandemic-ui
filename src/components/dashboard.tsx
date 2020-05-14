@@ -92,7 +92,7 @@ const Dashboard = () => {
       <Container className={classes.container}>
         <Grid container spacing={3} style={{ margin: 0 }}>
           <KeyNumbersAndMap options={options} />
-          <InfoBoxAndMap />
+          <InfoBoxAndTopCountries />
           <InteractionsSection
             options={options}
             sliderValue={sliderValue}
@@ -128,7 +128,7 @@ const KeyNumbersAndMap = ({
   );
 };
 
-const InfoBoxAndMap = () => {
+const InfoBoxAndTopCountries = () => {
   return (
     <>
       <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
