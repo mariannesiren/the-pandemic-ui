@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
 const options = [
   {
     name: 'Active',
-    description: 'Kuvaus aktiivisista',
+    description: 'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
   },
-  { name: 'Confirmed', description: 'Kuvaus vahvistetuista' },
+  { name: 'Confirmed', description: 'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.' },
   { name: 'Recovered', description: 'Kuvaus parantuneista' },
   { name: 'Dead', description: 'Kuvaus kuolleista' },
 ];
@@ -37,7 +37,8 @@ const Dashboard = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedType, setSelectedType] = React.useState(0);
 
-  const [endDate, setEndDate] = React.useState(new Date('05/12/2020'));
+  const [lastDate, setLastDate] = React.useState(new Date('05/12/2020'));
+  const [endDate, setEndDate] = React.useState(lastDate);
   const [startDate, setStartDate] = React.useState(new Date('03/22/2020'));
 
   const maxValue = 51;
@@ -98,6 +99,7 @@ const Dashboard = () => {
             anchorEl={anchorEl}
             startDate={startDate}
             endDate={endDate}
+            lastDate={lastDate}
             selectedType={selectedType}
           />
         </Grid>
@@ -113,7 +115,7 @@ const KeyNumbersAndMap = ({
 }) => {
   return (
     <>
-      <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
+      <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0}}>
         <KeyNumbers types={options} />
         <WorldMap />
       </Grid>
@@ -124,7 +126,7 @@ const KeyNumbersAndMap = ({
 const InfoBoxAndMap = () => {
   return (
     <>
-      <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
+      <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0}}>
         <InfoBox />
         <TopCountries />
       </Grid>
@@ -143,6 +145,7 @@ const InteractionsSection = ({
   anchorEl,
   startDate,
   endDate,
+  lastDate,
   selectedType,
 }: {
   options: { name: string; description: string }[];
@@ -155,11 +158,12 @@ const InteractionsSection = ({
   anchorEl: null | HTMLElement;
   startDate: Date;
   endDate: Date;
+  lastDate: Date;
   selectedType: number;
 }) => {
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item container xs={12} spacing={3} style={{ margin: 0}}>
         <TimeFrame
           options={options}
           sliderValue={sliderValue}
@@ -171,6 +175,7 @@ const InteractionsSection = ({
           anchorEl={anchorEl}
           startDate={startDate}
           endDate={endDate}
+          lastDate={lastDate}
           selectedType={selectedType}
         />
       </Grid>
