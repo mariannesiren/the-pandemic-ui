@@ -24,9 +24,14 @@ const useStyles = makeStyles((theme) => ({
 const options = [
   {
     name: 'Active',
-    description: 'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
+    description:
+      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
   },
-  { name: 'Confirmed', description: 'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.' },
+  {
+    name: 'Confirmed',
+    description:
+      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
+  },
   { name: 'Recovered', description: 'Kuvaus parantuneista' },
   { name: 'Dead', description: 'Kuvaus kuolleista' },
 ];
@@ -115,7 +120,7 @@ const KeyNumbersAndMap = ({
 }) => {
   return (
     <>
-      <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0}}>
+      <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
         <KeyNumbers types={options} />
         <WorldMap />
       </Grid>
@@ -126,7 +131,7 @@ const KeyNumbersAndMap = ({
 const InfoBoxAndMap = () => {
   return (
     <>
-      <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0}}>
+      <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
         <InfoBox />
         <TopCountries />
       </Grid>
@@ -163,7 +168,7 @@ const InteractionsSection = ({
 }) => {
   return (
     <>
-      <Grid item container xs={12} spacing={3} style={{ margin: 0}}>
+      <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
         <TimeFrame
           options={options}
           sliderValue={sliderValue}
