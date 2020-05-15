@@ -12,17 +12,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const KeyNumbers = ({
-  types,
+  keyNumbers,
 }: {
-  types: { name: string; description: string }[];
+  keyNumbers: { name: string; sum: number }[];
 }) => {
   const classes = useStyles();
   return (
     <>
-      {types.map((type, index) => (
-        <Grid item xs={3} key={type.name + index}>
+      {keyNumbers.map((keyNumber, index) => (
+        <Grid item xs={3} key={keyNumber.name + index}>
           <Paper className={classes.container}>
-            <Typography>{type.name}</Typography>
+            <Typography>{keyNumber.name}</Typography>
+            <Typography>{keyNumber.sum}</Typography>
           </Paper>
         </Grid>
       ))}

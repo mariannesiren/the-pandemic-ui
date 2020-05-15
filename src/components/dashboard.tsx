@@ -53,11 +53,42 @@ const getObjectByDate = (
   const formattedMonth = month < 10 ? `0${month + 1}` : `${month + 1}`;
 
   const parsedDate = `${year}-${formattedMonth}-${day}`;
-  console.log('endDate', endDate);
-  console.log('coronaData', coronaData);
 
-  const newArray = coronaData.filter((data) => data.date.includes(parsedDate));
-  console.log('newArray', newArray);
+  const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
+  console.log('countries by end date:', countriesByEndDate);
+
+  let activeSum = 0;
+  let confirmedSum = 0;
+  let recoveredSum = 0;
+  let deadSum = 0;
+  countriesByEndDate.forEach(country => {
+    activeSum += country.active;
+    confirmedSum += country.confirmed;
+    recoveredSum += country.recovered;
+    deadSum += country.deaths;
+  });
+  console.log('activesum', activeSum);
+  console.log('confirmedsum', confirmedSum);
+  console.log('recoveredsum', recoveredSum);
+  console.log('deadsum', deadSum);
+  return [
+            {
+              'name': 'Active',
+              'sum': activeSum,
+            },
+            {
+              'name': 'Confirmed',
+              'sum': confirmedSum,
+            },
+            {
+              'name': 'Recovered',
+              'sum': recoveredSum,
+            },
+            {
+              'name': 'Dead',
+              'sum': deadSum,
+            }
+          ]  
 };
 
 const Dashboard = () => {
@@ -86,6 +117,29 @@ const Dashboard = () => {
 
   const [coronaData, setCoronaData] = React.useState<[]>([]);
 
+  const [keyNumbers, setKeyNumbers] = React.useState<
+    {
+      'name': string,
+      'sum': number,
+    }[]>([
+      {
+        'name': 'Active',
+        'sum': 0,
+      },
+      {
+        'name': 'Confirmed',
+        'sum': 0,
+      },
+      {
+        'name': 'Recovered',
+        'sum': 0,
+      },
+      {
+        'name': 'Dead',
+        'sum': 0,
+      }
+    ])
+
   React.useEffect(() => {
     fetch('http://167.172.186.109:8080/api/all')
       .then((response) => response.json())
@@ -111,7 +165,7 @@ const Dashboard = () => {
         setPrevValue(differenceInDays);
         setCoronaData(data);
 
-        getObjectByDate(data, endDate);
+        setKeyNumbers(getObjectByDate(data, endDate));
       });
   }, []);
 
@@ -146,7 +200,7 @@ const Dashboard = () => {
       {coronaData.length > 0 && (
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
-            <KeyNumbersAndMap options={options} />
+            <KeyNumbersAndMap keyNumbers={keyNumbers}/>
             <InfoBoxAndTopCountries />
             <InteractionsSection
               options={options}
@@ -170,14 +224,14 @@ const Dashboard = () => {
 };
 
 const KeyNumbersAndMap = ({
-  options,
+  keyNumbers,
 }: {
-  options: { name: string; description: string }[];
+  keyNumbers: { name: string; sum: number }[];
 }) => {
   return (
     <>
       <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
-        <KeyNumbers types={options} />
+        <KeyNumbers keyNumbers={keyNumbers} />
         <WorldMap />
       </Grid>
     </>
