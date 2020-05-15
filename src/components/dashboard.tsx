@@ -51,8 +51,10 @@ const getObjectByDate = (
   const month = endDate.getMonth();
   const day = endDate.getDate();
   const formattedMonth = month < 10 ? `0${month + 1}` : `${month + 1}`;
-
-  const parsedDate = `${year}-${formattedMonth}-${day}`;
+  const formattedDay = day < 10 ? `0${day}` : `${day}`;
+  
+  const parsedDate = `${year}-${formattedMonth}-${formattedDay}`;
+  console.log('parsed date', parsedDate);
 
   const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
   console.log('countries by end date:', countriesByEndDate);
@@ -102,7 +104,9 @@ const Dashboard = () => {
     new Date()
   );
   // End date of timeframe user selects (defaults to max possible date)
-  const [endDate, setEndDate] = React.useState<Date>(maxDateOfTimeFrame);
+  const [endDate, setEndDate] = React.useState<Date>(
+    new Date()
+  );
   // Start date of data and start date of timeframe (not possible to change)
   const [startDate, setStartDate] = React.useState<Date>(new Date());
 
@@ -147,6 +151,7 @@ const Dashboard = () => {
         console.log(data);
         const lastDate = new Date(data[data.length - 1].date);
         setMaxDateOfTimeFrame(lastDate);
+        setEndDate(lastDate);
 
         const firstDate = new Date(data[0].date);
         setStartDate(firstDate);
@@ -168,6 +173,9 @@ const Dashboard = () => {
         setKeyNumbers(getObjectByDate(data, endDate));
       });
   }, []);
+
+
+    
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -193,6 +201,8 @@ const Dashboard = () => {
     newDate.setDate(dateValue);
     setEndDate(newDate);
     setPrevValue(value);
+
+    setKeyNumbers(getObjectByDate(coronaData, newDate));
   };
 
   return (
