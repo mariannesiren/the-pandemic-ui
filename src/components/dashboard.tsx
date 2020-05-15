@@ -24,34 +24,148 @@ const useStyles = makeStyles((theme) => ({
 const options = [
   {
     name: 'Active',
-    description: 'Kuvaus aktiivisista',
+    description:
+      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
   },
-  { name: 'Confirmed', description: 'Kuvaus vahvistetuista' },
+  {
+    name: 'Confirmed',
+    description:
+      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
+  },
   { name: 'Recovered', description: 'Kuvaus parantuneista' },
   { name: 'Dead', description: 'Kuvaus kuolleista' },
 ];
+
+const getObjectByDate = (
+  coronaData: {
+    active: number;
+    confirmed: number;
+    country: string;
+    date: string;
+    deaths: number;
+    recovered: number;
+  }[],
+  endDate: Date
+) => {
+  const year = endDate.getFullYear();
+  const month = endDate.getMonth();
+  const day = endDate.getDate();
+  const formattedMonth = month < 10 ? `0${month + 1}` : `${month + 1}`;
+
+  const parsedDate = `${year}-${formattedMonth}-${day}`;
+
+  const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
+  console.log('countries by end date:', countriesByEndDate);
+
+  let activeSum = 0;
+  let confirmedSum = 0;
+  let recoveredSum = 0;
+  let deadSum = 0;
+  countriesByEndDate.forEach(country => {
+    activeSum += country.active;
+    confirmedSum += country.confirmed;
+    recoveredSum += country.recovered;
+    deadSum += country.deaths;
+  });
+  console.log('activesum', activeSum);
+  console.log('confirmedsum', confirmedSum);
+  console.log('recoveredsum', recoveredSum);
+  console.log('deadsum', deadSum);
+  return [
+            {
+              'name': 'Active',
+              'sum': activeSum,
+            },
+            {
+              'name': 'Confirmed',
+              'sum': confirmedSum,
+            },
+            {
+              'name': 'Recovered',
+              'sum': recoveredSum,
+            },
+            {
+              'name': 'Dead',
+              'sum': deadSum,
+            }
+          ]  
+};
 
 const Dashboard = () => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selectedType, setSelectedType] = React.useState(0);
+  const [selectedType, setSelectedType] = React.useState<number>(0);
 
-  const [endDate, setEndDate] = React.useState(new Date('05/12/2020'));
-  const [startDate, setStartDate] = React.useState(new Date('03/22/2020'));
+  // Last date of data we have
+  const [maxDateOfTimeFrame, setMaxDateOfTimeFrame] = React.useState<Date>(
+    new Date()
+  );
+  // End date of timeframe user selects (defaults to max possible date)
+  const [endDate, setEndDate] = React.useState<Date>(maxDateOfTimeFrame);
+  // Start date of data and start date of timeframe (not possible to change)
+  const [startDate, setStartDate] = React.useState<Date>(new Date());
 
-  const maxValue = 51;
-  const [sliderValue, setSliderValue] = React.useState<number>(maxValue);
-  const [prevValue, setPrevValue] = React.useState<number>(maxValue);
+  // The maximum value between start and end date
+  const [maxValueOfSlider, setMaxValueOfSlider] = React.useState<number>(0);
+  // The value between start and end date that user selects from timeframe (defaults to max)
+  const [sliderValue, setSliderValue] = React.useState<number>(
+    maxValueOfSlider
+  );
+  // Previous value of the slider
+  const [prevValue, setPrevValue] = React.useState<number>(maxValueOfSlider);
 
-  const [data, setData] = React.useState([]);
+  const [coronaData, setCoronaData] = React.useState<[]>([]);
+
+  const [keyNumbers, setKeyNumbers] = React.useState<
+    {
+      'name': string,
+      'sum': number,
+    }[]>([
+      {
+        'name': 'Active',
+        'sum': 0,
+      },
+      {
+        'name': 'Confirmed',
+        'sum': 0,
+      },
+      {
+        'name': 'Recovered',
+        'sum': 0,
+      },
+      {
+        'name': 'Dead',
+        'sum': 0,
+      }
+    ])
 
   React.useEffect(() => {
     fetch('http://167.172.186.109:8080/api/all')
       .then((response) => response.json())
       .then((data) => {
-        setData(data);
         console.log(data);
+        const lastDate = new Date(data[data.length - 1].date);
+        setMaxDateOfTimeFrame(lastDate);
+
+        const firstDate = new Date(data[0].date);
+        setStartDate(firstDate);
+
+        // To calculate the time difference of two dates
+        const differenceBetweenStartAndEndDate =
+          lastDate.getTime() - firstDate.getTime();
+
+        // To calculate the no. of days between two dates
+        const differenceInDays = Math.round(
+          differenceBetweenStartAndEndDate / (1000 * 3600 * 24)
+        );
+
+        setMaxValueOfSlider(differenceInDays);
+        setSliderValue(differenceInDays);
+        setPrevValue(differenceInDays);
+        setCoronaData(data);
+
+        setKeyNumbers(getObjectByDate(data, endDate));
       });
   }, []);
 
@@ -83,45 +197,48 @@ const Dashboard = () => {
 
   return (
     <main className={classes.content}>
-      <Container className={classes.container}>
-        <Grid container spacing={3} style={{ margin: 0 }}>
-          <KeyNumbersAndMap options={options} />
-          <InfoBoxAndMap />
-          <InteractionsSection
-            options={options}
-            sliderValue={sliderValue}
-            maxValue={maxValue}
-            handleSliderChange={handleSliderChange}
-            handleSliderStop={handleSliderStop}
-            handleClick={handleClick}
-            handleItemClick={handleItemClick}
-            anchorEl={anchorEl}
-            startDate={startDate}
-            endDate={endDate}
-            selectedType={selectedType}
-          />
-        </Grid>
-      </Container>
+      {coronaData.length > 0 && (
+        <Container className={classes.container}>
+          <Grid container spacing={3} style={{ margin: 0 }}>
+            <KeyNumbersAndMap keyNumbers={keyNumbers}/>
+            <InfoBoxAndTopCountries />
+            <InteractionsSection
+              options={options}
+              sliderValue={sliderValue}
+              maxValue={maxValueOfSlider}
+              handleSliderChange={handleSliderChange}
+              handleSliderStop={handleSliderStop}
+              handleClick={handleClick}
+              handleItemClick={handleItemClick}
+              anchorEl={anchorEl}
+              startDate={startDate}
+              endDate={endDate}
+              lastDate={maxDateOfTimeFrame}
+              selectedType={selectedType}
+            />
+          </Grid>
+        </Container>
+      )}
     </main>
   );
 };
 
 const KeyNumbersAndMap = ({
-  options,
+  keyNumbers,
 }: {
-  options: { name: string; description: string }[];
+  keyNumbers: { name: string; sum: number }[];
 }) => {
   return (
     <>
       <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
-        <KeyNumbers types={options} />
+        <KeyNumbers keyNumbers={keyNumbers} />
         <WorldMap />
       </Grid>
     </>
   );
 };
 
-const InfoBoxAndMap = () => {
+const InfoBoxAndTopCountries = () => {
   return (
     <>
       <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
@@ -143,6 +260,7 @@ const InteractionsSection = ({
   anchorEl,
   startDate,
   endDate,
+  lastDate,
   selectedType,
 }: {
   options: { name: string; description: string }[];
@@ -155,11 +273,12 @@ const InteractionsSection = ({
   anchorEl: null | HTMLElement;
   startDate: Date;
   endDate: Date;
+  lastDate: Date;
   selectedType: number;
 }) => {
   return (
     <>
-      <Grid item xs={12}>
+      <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
         <TimeFrame
           options={options}
           sliderValue={sliderValue}
@@ -171,6 +290,7 @@ const InteractionsSection = ({
           anchorEl={anchorEl}
           startDate={startDate}
           endDate={endDate}
+          lastDate={lastDate}
           selectedType={selectedType}
         />
       </Grid>
