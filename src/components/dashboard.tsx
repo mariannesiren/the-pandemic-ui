@@ -6,7 +6,7 @@ import WorldMap from './worldmap';
 import TopCountries from './top-countries';
 import InfoBox from './infobox';
 import KeyNumbers from './keynumbers';
-import TimeFrame from './timeframe';
+import UserInteractions from './user-interactions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -57,7 +57,6 @@ const getObjectByDate = (
   console.log('parsed date', parsedDate);
 
   const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
-  console.log('countries by end date:', countriesByEndDate);
 
   let activeSum = 0;
   let confirmedSum = 0;
@@ -289,7 +288,7 @@ const InteractionsSection = ({
   return (
     <>
       <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
-        <TimeFrame
+        <UserInteractions
           options={options}
           sliderValue={sliderValue}
           maxValue={maxValue}

@@ -61,7 +61,7 @@ const StyledSlider = withStyles({
   },
 })(Slider);
 
-const TimeFrame = ({
+const UserInteractions = ({
   options,
   sliderValue,
   maxValue,
@@ -165,4 +165,4 @@ const TimeFrame = ({
   );
 };
 
-export default TimeFrame;
+export default UserInteractions;
