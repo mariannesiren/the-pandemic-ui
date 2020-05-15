@@ -67,8 +67,8 @@ const UserInteractions = ({
   maxValue,
   handleSliderChange,
   handleSliderStop,
-  handleClick,
-  handleItemClick,
+  handleTypeMenuClick,
+  handleTypeMenuItemClick,
   anchorEl,
   startDate,
   endDate,
@@ -80,8 +80,8 @@ const UserInteractions = ({
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
   handleSliderStop: (event: any, value: number) => void;
-  handleClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  handleItemClick: (index: number) => void;
+  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  handleTypeMenuItemClick: (index: number) => void;
   anchorEl: null | HTMLElement;
   startDate: Date;
   endDate: Date;
@@ -133,7 +133,7 @@ const UserInteractions = ({
               aria-controls="typemenu"
               aria-labelledby="typeselection"
               aria-haspopup="true"
-              onClick={handleClick}
+              onClick={handleTypeMenuClick}
               className={classes.typebutton}
               endIcon={<ExpandMore />}
             >
@@ -149,7 +149,7 @@ const UserInteractions = ({
                 <MenuItem
                   key={option.name}
                   selected={index === selectedType}
-                  onClick={() => handleItemClick(index)}
+                  onClick={() => handleTypeMenuItemClick(index)}
                 >
                   {option.name}
                 </MenuItem>

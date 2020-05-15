@@ -12,10 +12,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const KeyNumbers = ({
-  keyNumbers,
+  keyNumbers, selected
 }: {
   keyNumbers: { name: string; sum: number }[];
+  selected: number;
 }) => {
+
   const classes = useStyles();
   return (
     <>
@@ -24,6 +26,7 @@ const KeyNumbers = ({
           <Paper className={classes.container}>
             <Typography>{keyNumber.name}</Typography>
             <Typography>{keyNumber.sum}</Typography>
+            <Typography>{selected}</Typography>
           </Paper>
         </Grid>
       ))}
