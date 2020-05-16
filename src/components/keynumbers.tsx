@@ -5,9 +5,22 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    height: 150,
+  paper: {
     padding: theme.spacing(2),
+    textAlign: 'center',
+  },
+  highlighted: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    backgroundColor: '#FFA600',
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  numbers: {
+    fontSize: '1.2em',
+  },
+  types: {
+    fontSize: '1em',
   },
 }));
 
@@ -19,17 +32,35 @@ const KeyNumbers = ({
 }) => {
 
   const classes = useStyles();
+
   return (
     <>
-      {keyNumbers.map((keyNumber, index) => (
-        <Grid item xs={3} key={keyNumber.name + index}>
-          <Paper className={classes.container}>
-            <Typography>{keyNumber.name}</Typography>
-            <Typography>{keyNumber.sum}</Typography>
-            <Typography>{selected}</Typography>
-          </Paper>
-        </Grid>
-      ))}
+      {keyNumbers.map((keyNumber, index) => {
+        if (index == selected) {
+          return (
+            <Grid item xs={3} key={keyNumber.name + index}>
+              <Paper className={classes.highlighted}>
+                <Typography className={classes.types}>{keyNumber.name}</Typography>
+                <Typography className={classes.numbers}>
+                  {keyNumber.sum.toLocaleString()}
+                </Typography>
+              </Paper>
+            </Grid>
+          )
+        }
+        else {
+          return (
+            <Grid item xs={3} key={keyNumber.name + index}>
+              <Paper className={classes.paper}>
+                <Typography className={classes.types}>{keyNumber.name}</Typography>
+                <Typography className={classes.numbers}>
+                  {keyNumber.sum.toLocaleString()}
+                </Typography>
+              </Paper>
+            </Grid>
+          )
+        }
+      })}
     </>
   );
 };

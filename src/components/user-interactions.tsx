@@ -102,7 +102,6 @@ const UserInteractions = ({
               value={sliderValue}
               aria-labelledby="timeslider"
               step={1}
-              valueLabelDisplay="auto"
               max={maxValue}
               onChange={handleSliderChange}
               onChangeCommitted={handleSliderStop}
