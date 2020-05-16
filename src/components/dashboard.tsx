@@ -47,6 +47,7 @@ const getObjectByDate = (
   }[],
   endDate: Date
 ) => {
+
   const year = endDate.getFullYear();
   const month = endDate.getMonth();
   const day = endDate.getDate();
@@ -168,13 +169,10 @@ const Dashboard = () => {
         setSliderValue(differenceInDays);
         setPrevValue(differenceInDays);
         setCoronaData(data);
-
-        setKeyNumbers(getObjectByDate(data, endDate));
+        setKeyNumbers(getObjectByDate(data, lastDate));
       });
   }, []);
 
-
-    
 
   const handleTypeMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -190,8 +188,6 @@ const Dashboard = () => {
   };
 
   const handleSliderStop = (event: any, value: number) => {
-    console.log('Current value is: ' + value);
-    console.log('Previous value is: ' + prevValue);
 
     let diff = prevValue - value;
     let newDate = new Date(endDate);
