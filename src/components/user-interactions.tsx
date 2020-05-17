@@ -106,7 +106,7 @@ const UserInteractions = ({
   const classes = useStyles();
 
   return (
-    <>
+    <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
       <Paper className={classes.interaction}>
         <Grid item container xs={9} style={{ marginRight: '25px' }}>
           <Grid item xs={12}>
@@ -175,7 +175,7 @@ const UserInteractions = ({
           </Grid>
         </Grid>
       </Paper>
-    </>
+    </Grid>
   );
 };
 

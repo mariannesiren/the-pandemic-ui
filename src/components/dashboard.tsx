@@ -133,7 +133,7 @@ const Dashboard = () => {
           <Grid container spacing={3} style={{ margin: 0 }}>
             <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType} />
             <InfoBoxAndTopCountries />
-            <InteractionsSection
+            <UserInteractions
               sliderValue={sliderValue}
               maxValue={maxValueOfSlider}
               handleSliderChange={handleSliderChange}
@@ -176,54 +176,6 @@ const InfoBoxAndTopCountries = () => {
       <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
         <InfoBox />
         <TopCountries />
-      </Grid>
-    </>
-  );
-};
-
-const InteractionsSection = ({
-  sliderValue,
-  maxValue,
-  handleSliderChange,
-  handleSliderStop,
-  handleTypeMenuClick,
-  handleTypeMenuItemClick,
-  anchorEl,
-  startDate,
-  endDate,
-  lastDate,
-  selectedType,
-}: {
-  sliderValue: number;
-  maxValue: number;
-  handleSliderChange: (event: any, newValue: number) => void;
-  handleSliderStop: (event: any, value: number) => void;
-  handleTypeMenuClick: (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => void;
-  handleTypeMenuItemClick: (index: number) => void;
-  anchorEl: null | HTMLElement;
-  startDate: Date;
-  endDate: Date;
-  lastDate: Date;
-  selectedType: number;
-}) => {
-  return (
-    <>
-      <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
-        <UserInteractions
-          sliderValue={sliderValue}
-          maxValue={maxValue}
-          handleSliderChange={handleSliderChange}
-          handleSliderStop={handleSliderStop}
-          handleTypeMenuClick={handleTypeMenuClick}
-          handleTypeMenuItemClick={handleTypeMenuItemClick}
-          anchorEl={anchorEl}
-          startDate={startDate}
-          endDate={endDate}
-          lastDate={lastDate}
-          selectedType={selectedType}
-        />
       </Grid>
     </>
   );
