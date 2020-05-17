@@ -61,14 +61,14 @@ const StyledSlider = withStyles({
   },
 })(Slider);
 
-const TimeFrame = ({
+const UserInteractions = ({
   options,
   sliderValue,
   maxValue,
   handleSliderChange,
   handleSliderStop,
-  handleClick,
-  handleItemClick,
+  handleTypeMenuClick,
+  handleTypeMenuItemClick,
   anchorEl,
   startDate,
   endDate,
@@ -80,8 +80,8 @@ const TimeFrame = ({
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
   handleSliderStop: (event: any, value: number) => void;
-  handleClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  handleItemClick: (index: number) => void;
+  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  handleTypeMenuItemClick: (index: number) => void;
   anchorEl: null | HTMLElement;
   startDate: Date;
   endDate: Date;
@@ -102,7 +102,6 @@ const TimeFrame = ({
               value={sliderValue}
               aria-labelledby="timeslider"
               step={1}
-              valueLabelDisplay="auto"
               max={maxValue}
               onChange={handleSliderChange}
               onChangeCommitted={handleSliderStop}
@@ -133,7 +132,7 @@ const TimeFrame = ({
               aria-controls="typemenu"
               aria-labelledby="typeselection"
               aria-haspopup="true"
-              onClick={handleClick}
+              onClick={handleTypeMenuClick}
               className={classes.typebutton}
               endIcon={<ExpandMore />}
             >
@@ -149,7 +148,7 @@ const TimeFrame = ({
                 <MenuItem
                   key={option.name}
                   selected={index === selectedType}
-                  onClick={() => handleItemClick(index)}
+                  onClick={() => handleTypeMenuItemClick(index)}
                 >
                   {option.name}
                 </MenuItem>
@@ -165,4 +164,4 @@ const TimeFrame = ({
   );
 };
 
-export default TimeFrame;
+export default UserInteractions;

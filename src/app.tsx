@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Dashboard from './components/dashboard';
-import MyDrawer from './components/mydrawer';
+import SideBar from './components/sidebar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,7 @@ const App = () => {
     <div className={classes.root}>
       <CssBaseline />
 
-      <MyDrawer />
+      <SideBar />
       <Dashboard />
     </div>
   );

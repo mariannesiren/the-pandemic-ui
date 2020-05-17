@@ -6,7 +6,7 @@ import WorldMap from './worldmap';
 import TopCountries from './top-countries';
 import InfoBox from './infobox';
 import KeyNumbers from './keynumbers';
-import TimeFrame from './timeframe';
+import UserInteractions from './user-interactions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -47,6 +47,7 @@ const getObjectByDate = (
   }[],
   endDate: Date
 ) => {
+
   const year = endDate.getFullYear();
   const month = endDate.getMonth();
   const day = endDate.getDate();
@@ -57,7 +58,6 @@ const getObjectByDate = (
   console.log('parsed date', parsedDate);
 
   const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
-  console.log('countries by end date:', countriesByEndDate);
 
   let activeSum = 0;
   let confirmedSum = 0;
@@ -169,19 +169,16 @@ const Dashboard = () => {
         setSliderValue(differenceInDays);
         setPrevValue(differenceInDays);
         setCoronaData(data);
-
-        setKeyNumbers(getObjectByDate(data, endDate));
+        setKeyNumbers(getObjectByDate(data, lastDate));
       });
   }, []);
 
 
-    
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleTypeMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleItemClick = (index: number) => {
+  const handleTypeMenuItemClick = (index: number) => {
     setSelectedType(index);
     setAnchorEl(null);
   };
@@ -191,8 +188,6 @@ const Dashboard = () => {
   };
 
   const handleSliderStop = (event: any, value: number) => {
-    console.log('Current value is: ' + value);
-    console.log('Previous value is: ' + prevValue);
 
     let diff = prevValue - value;
     let newDate = new Date(endDate);
@@ -210,7 +205,7 @@ const Dashboard = () => {
       {coronaData.length > 0 && (
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
-            <KeyNumbersAndMap keyNumbers={keyNumbers}/>
+            <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType}/>
             <InfoBoxAndTopCountries />
             <InteractionsSection
               options={options}
@@ -218,8 +213,8 @@ const Dashboard = () => {
               maxValue={maxValueOfSlider}
               handleSliderChange={handleSliderChange}
               handleSliderStop={handleSliderStop}
-              handleClick={handleClick}
-              handleItemClick={handleItemClick}
+              handleTypeMenuClick={handleTypeMenuClick}
+              handleTypeMenuItemClick={handleTypeMenuItemClick}
               anchorEl={anchorEl}
               startDate={startDate}
               endDate={endDate}
@@ -234,14 +229,15 @@ const Dashboard = () => {
 };
 
 const KeyNumbersAndMap = ({
-  keyNumbers,
+  keyNumbers, selected
 }: {
   keyNumbers: { name: string; sum: number }[];
+  selected: number;
 }) => {
   return (
     <>
       <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
-        <KeyNumbers keyNumbers={keyNumbers} />
+        <KeyNumbers keyNumbers={keyNumbers} selected={selected} />
         <WorldMap />
       </Grid>
     </>
@@ -265,8 +261,8 @@ const InteractionsSection = ({
   maxValue,
   handleSliderChange,
   handleSliderStop,
-  handleClick,
-  handleItemClick,
+  handleTypeMenuClick,
+  handleTypeMenuItemClick,
   anchorEl,
   startDate,
   endDate,
@@ -278,8 +274,8 @@ const InteractionsSection = ({
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
   handleSliderStop: (event: any, value: number) => void;
-  handleClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  handleItemClick: (index: number) => void;
+  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  handleTypeMenuItemClick: (index: number) => void;
   anchorEl: null | HTMLElement;
   startDate: Date;
   endDate: Date;
@@ -289,14 +285,14 @@ const InteractionsSection = ({
   return (
     <>
       <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
-        <TimeFrame
+        <UserInteractions
           options={options}
           sliderValue={sliderValue}
           maxValue={maxValue}
           handleSliderChange={handleSliderChange}
           handleSliderStop={handleSliderStop}
-          handleClick={handleClick}
-          handleItemClick={handleItemClick}
+          handleTypeMenuClick={handleTypeMenuClick}
+          handleTypeMenuItemClick={handleTypeMenuItemClick}
           anchorEl={anchorEl}
           startDate={startDate}
           endDate={endDate}

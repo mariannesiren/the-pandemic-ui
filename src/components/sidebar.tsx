@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyDrawer = () => {
+const SideBar = () => {
   const classes = useStyles();
 
   return (
@@ -75,4 +75,4 @@ const MyDrawer = () => {
     </Drawer>
   );
 };
-export default MyDrawer;
+export default SideBar;
