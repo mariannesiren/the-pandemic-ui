@@ -33,9 +33,7 @@ const Dashboard = () => {
     new Date()
   );
   // End date of timeframe user selects (defaults to max possible date)
-  const [endDate, setEndDate] = React.useState<Date>(
-    new Date()
-  );
+  const [endDate, setEndDate] = React.useState<Date>(new Date());
   // Start date of data and start date of timeframe (not possible to change)
   const [startDate, setStartDate] = React.useState<Date>(new Date());
 
@@ -52,26 +50,27 @@ const Dashboard = () => {
 
   const [keyNumbers, setKeyNumbers] = React.useState<
     {
-      'name': string,
-      'sum': number,
-    }[]>([
-      {
-        'name': 'Active',
-        'sum': 0,
-      },
-      {
-        'name': 'Confirmed',
-        'sum': 0,
-      },
-      {
-        'name': 'Recovered',
-        'sum': 0,
-      },
-      {
-        'name': 'Dead',
-        'sum': 0,
-      }
-    ])
+      name: string;
+      sum: number;
+    }[]
+  >([
+    {
+      name: 'Active',
+      sum: 0,
+    },
+    {
+      name: 'Confirmed',
+      sum: 0,
+    },
+    {
+      name: 'Recovered',
+      sum: 0,
+    },
+    {
+      name: 'Dead',
+      sum: 0,
+    },
+  ]);
 
   React.useEffect(() => {
     fetch('http://167.172.186.109:8080/api/all')
@@ -102,7 +101,6 @@ const Dashboard = () => {
       });
   }, []);
 
-
   const handleTypeMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -117,7 +115,6 @@ const Dashboard = () => {
   };
 
   const handleSliderStop = (event: any, value: number) => {
-
     let diff = prevValue - value;
     let newDate = new Date(endDate);
     let dateValue = 0;
@@ -134,10 +131,9 @@ const Dashboard = () => {
       {coronaData.length > 0 && (
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
-            <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType}/>
+            <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType} />
             <InfoBoxAndTopCountries />
             <InteractionsSection
-              options={options}
               sliderValue={sliderValue}
               maxValue={maxValueOfSlider}
               handleSliderChange={handleSliderChange}
@@ -158,7 +154,8 @@ const Dashboard = () => {
 };
 
 const KeyNumbersAndMap = ({
-  keyNumbers, selected
+  keyNumbers,
+  selected,
 }: {
   keyNumbers: { name: string; sum: number }[];
   selected: number;
@@ -201,7 +198,9 @@ const InteractionsSection = ({
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
   handleSliderStop: (event: any, value: number) => void;
-  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  handleTypeMenuClick: (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => void;
   handleTypeMenuItemClick: (index: number) => void;
   anchorEl: null | HTMLElement;
   startDate: Date;

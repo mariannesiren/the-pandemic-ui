@@ -93,7 +93,9 @@ const UserInteractions = ({
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
   handleSliderStop: (event: any, value: number) => void;
-  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  handleTypeMenuClick: (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => void;
   handleTypeMenuItemClick: (index: number) => void;
   anchorEl: null | HTMLElement;
   startDate: Date;
