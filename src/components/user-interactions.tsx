@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMore from '@material-ui/icons/expandMore';
 import Paper from '@material-ui/core/Paper';
+import { options } from './options';
 
 const useStyles = makeStyles((theme) => ({
   interaction: {
@@ -67,27 +68,6 @@ const StyledSlider = withStyles({
     borderRadius: 4,
   },
 })(Slider);
-
-const options = [
-  {
-    name: 'Active',
-    description:
-    'Active cases refers to confirmed cases that have not yet had an outcome.',
-  },
-  {
-    name: 'Confirmed',
-    description:
-      'Confirmed cases include presumptive positive cases and probable cases.',
-  },
-  { 
-    name: 'Recovered', 
-    description: 'Recovered cases are estimates of how many people have recovered from Covid-19.' 
-  },
-  { 
-    name: 'Dead', 
-    description: 'Deaths are estimates of how many people have died of Covid-19.' 
-  },
-];
 
 const UserInteractions = ({
   sliderValue,
