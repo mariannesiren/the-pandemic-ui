@@ -1,4 +1,4 @@
-export const getDateObjects = (
+export const getCountryValuesByDate = (
   coronaData: {
     active: number;
     confirmed: number;
