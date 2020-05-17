@@ -22,21 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const options = [
-  {
-    name: 'Active',
-    description:
-      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
-  },
-  {
-    name: 'Confirmed',
-    description:
-      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
-  },
-  { name: 'Recovered', description: 'Kuvaus parantuneista' },
-  { name: 'Dead', description: 'Kuvaus kuolleista' },
-];
-
 const Dashboard = () => {
   const classes = useStyles();
 
@@ -200,7 +185,6 @@ const InfoBoxAndTopCountries = () => {
 };
 
 const InteractionsSection = ({
-  options,
   sliderValue,
   maxValue,
   handleSliderChange,
@@ -213,7 +197,6 @@ const InteractionsSection = ({
   lastDate,
   selectedType,
 }: {
-  options: { name: string; description: string }[];
   sliderValue: number;
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
@@ -230,7 +213,6 @@ const InteractionsSection = ({
     <>
       <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
         <UserInteractions
-          options={options}
           sliderValue={sliderValue}
           maxValue={maxValue}
           handleSliderChange={handleSliderChange}

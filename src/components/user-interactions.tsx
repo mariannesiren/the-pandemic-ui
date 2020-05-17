@@ -61,8 +61,22 @@ const StyledSlider = withStyles({
   },
 })(Slider);
 
+const options = [
+  {
+    name: 'Active',
+    description:
+      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
+  },
+  {
+    name: 'Confirmed',
+    description:
+      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
+  },
+  { name: 'Recovered', description: 'Kuvaus parantuneista' },
+  { name: 'Dead', description: 'Kuvaus kuolleista' },
+];
+
 const UserInteractions = ({
-  options,
   sliderValue,
   maxValue,
   handleSliderChange,
@@ -75,7 +89,6 @@ const UserInteractions = ({
   lastDate,
   selectedType,
 }: {
-  options: { name: string; description: string }[];
   sliderValue: number;
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
