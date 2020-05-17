@@ -9,8 +9,19 @@ const useStyles = makeStyles((theme) => ({
     height: '50%',
   },
   paper: {
-      height: '100%',
-      padding: theme.spacing(2),
+    height: '100%',
+    padding: theme.spacing(2),
+  },
+  heading: {
+    fontFamily: 'Assistant, sans-serif',
+    fontWeight: 600,
+    width: 210,
+    fontSize: '1em',
+    backgroundColor: '#FFA600',
+    color: '#fff',
+    textTransform: 'uppercase',
+    padding: theme.spacing(1),
+    marginLeft: '-16px',
   },
 }));
 
@@ -21,7 +32,7 @@ const TopCountries = () => {
     return (
         <Grid item xs={12} className={classes.container}>
                 <Paper className={classes.paper}>
-                  <Typography>Most cases per 1M people</Typography>
+                  <Typography className={classes.heading}>Most cases per 1M people</Typography>
                 </Paper>
         </Grid>
     );

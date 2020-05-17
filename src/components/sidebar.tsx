@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   mainheading: {
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
+    fontFamily: 'Merriweather, serif',
+    fontWeight: 700,
+    fontSize: '2em',
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     paddingTop: theme.spacing(7),
     paddingBottom: theme.spacing(7),
     backgroundColor: '#34234B',
@@ -31,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menutext: {
     color: '#fff',
+    fontSize: '0.85em',
+    fontFamily: 'Merriweather, serif',
+    lineHeight: '20px',
     padding: theme.spacing(3),
     marginTop: theme.spacing(2),
   },
@@ -51,18 +57,23 @@ const SideBar = () => {
       }}
       open={true}
     >
-      <Typography variant="h5" className={classes.mainheading}>
+      <Typography variant="h1" className={classes.mainheading}>
         The Pandemic
       </Typography>
       <Typography
         variant="body2"
-        align="center"
         className={classes.menutext}
         paragraph
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut ero labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco.
+        The Pandemic is an interactive visualization depicting the novel 
+        coronavirus pandemic of 2019 and 2020.   
+        <br></br>
+        <br></br>
+        This website and all its’ contents are part of a university project work 
+        and therefore should not be used for guidance or medical advice. 
+        <br></br>
+        <br></br>
+        Copyright of the data belongs to John Hopkins University.
       </Typography>
       <List>
         <ListItem button className={classes.menubutton}>

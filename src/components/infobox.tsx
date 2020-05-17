@@ -27,15 +27,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '-16px',
   },
   heading: {
-    fontSize: '1.1em',
-    fontWeight: 'bold',
+    fontSize: '1.2em',
+    fontFamily: 'Assistant, sans-serif',
+    fontWeight: 600,
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    fontFamily: 'Arial, sans-serif',
   },
   infotext: {
     fontSize: '0.85em',
     paddingBottom: theme.spacing(1),
+    fontFamily: 'Merriweather, serif',
   },
 }));
 
@@ -55,19 +56,20 @@ const InfoBox = () => {
               variant="h3"
               className={classes.heading}
             >
-              Heading here
+              The novel coronavirus
             </Typography>
             <Typography variant="body2" className={classes.infotext}>
               <strong>Novel</strong> coronavirus refers to a new strain of
               Coronaviruses that has not been previously identified in humans.
             </Typography>
             <Typography variant="body2" className={classes.infotext}>
-              <strong>Covid-19</strong> is the disease caused by the latest novel coronavirus.
+              <strong>Covid-19</strong> is the disease caused by the latest novel 
+              coronavirus, SARS-CoV2.
             </Typography>
             <Typography variant="body2" className={classes.infotext}>
-              <strong>Symptoms</strong> include...
+              <strong>Symptoms</strong> include fever, cough, shortness of breath, 
+              fatigue, runny nose, muscle aches, nausea, and diarrhea.
             </Typography>
-
           </Paper>
         </Grid>
 

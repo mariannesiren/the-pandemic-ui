@@ -14,13 +14,16 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     backgroundColor: '#FFA600',
     color: '#fff',
-    fontWeight: 'bold',
   },
   numbers: {
-    fontSize: '1.2em',
+    fontSize: '1.7em',
+    fontFamily: 'Assistant, sans-serif',
+    fontWeight: 600,
   },
   types: {
-    fontSize: '1em',
+    fontSize: '1.3em',
+    fontFamily: 'Assistant, sans-serif',
+    fontWeight: 400,
   },
 }));
 
