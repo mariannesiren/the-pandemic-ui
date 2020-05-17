@@ -132,7 +132,11 @@ const Dashboard = () => {
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
             <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType} />
-            <InfoBoxAndTopCountries />
+            <InfoBoxAndTopCountries
+              coronaData={coronaData}
+              endDate={endDate}
+              selected={selectedType}
+            />
             <UserInteractions
               sliderValue={sliderValue}
               maxValue={maxValueOfSlider}
@@ -170,12 +174,24 @@ const KeyNumbersAndMap = ({
   );
 };
 
-const InfoBoxAndTopCountries = () => {
+const InfoBoxAndTopCountries = ({
+  coronaData,
+  endDate,
+  selected,
+}: {
+  coronaData: [];
+  endDate: Date;
+  selected: number;
+}) => {
   return (
     <>
       <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
         <InfoBox />
-        <TopCountries />
+        <TopCountries
+          coronaData={coronaData}
+          endDate={endDate}
+          selected={selected}
+        />
       </Grid>
     </>
   );
