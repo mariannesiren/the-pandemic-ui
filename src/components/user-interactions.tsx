@@ -23,11 +23,18 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
+  select: {
+    fontFamily: 'Assistant, sans-serif',
+    fontWeight: 600,
+  },
   description: {
     paddingTop: theme.spacing(2),
+    fontFamily: 'Merriweather, serif',
+    fontSize: '0.85em',
   },
   sliderdate: {
     fontSize: '0.85em',
+    fontFamily: 'Merriweather, serif',
   },
 }));
 
@@ -65,15 +72,21 @@ const options = [
   {
     name: 'Active',
     description:
-      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
+    'Active cases refers to confirmed cases that have not yet had an outcome.',
   },
   {
     name: 'Confirmed',
     description:
-      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
+      'Confirmed cases include presumptive positive cases and probable cases.',
   },
-  { name: 'Recovered', description: 'Kuvaus parantuneista' },
-  { name: 'Dead', description: 'Kuvaus kuolleista' },
+  { 
+    name: 'Recovered', 
+    description: 'Recovered cases are estimates of how many people have recovered from Covid-19.' 
+  },
+  { 
+    name: 'Dead', 
+    description: 'Deaths are estimates of how many people have died of Covid-19.' 
+  },
 ];
 
 const UserInteractions = ({
@@ -149,7 +162,7 @@ const TimeFrameSection = ({
   return (
     <Grid item container xs={9} style={{ marginRight: '25px' }}>
       <Grid item xs={12}>
-        <Typography id="timeslider" gutterBottom>
+        <Typography id="timeslider" className={classes.select} gutterBottom>
           Select timeframe:
         </Typography>
         <StyledSlider
@@ -164,12 +177,12 @@ const TimeFrameSection = ({
       <Grid item xs={12}>
         <Box display="flex">
           <Box flexGrow={1}>
-            <Typography className={classes.sliderdate}>
+            <Typography variant="body1" className={classes.sliderdate}>
               {startDate.toDateString()}
             </Typography>
           </Box>
           <Box>
-            <Typography className={classes.sliderdate}>
+            <Typography variant="body1" className={classes.sliderdate}>
               {lastDate.toDateString()}
             </Typography>
           </Box>
@@ -199,7 +212,7 @@ const TypeMenuSection = ({
   return (
     <Grid item container xs={3}>
       <Grid item xs={12}>
-        <Typography id="typeselection" gutterBottom>
+        <Typography id="typeselection" className={classes.select} gutterBottom>
           Select case type:
         </Typography>
         <Button
