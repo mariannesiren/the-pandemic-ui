@@ -61,8 +61,22 @@ const StyledSlider = withStyles({
   },
 })(Slider);
 
+const options = [
+  {
+    name: 'Active',
+    description:
+      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
+  },
+  {
+    name: 'Confirmed',
+    description:
+      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
+  },
+  { name: 'Recovered', description: 'Kuvaus parantuneista' },
+  { name: 'Dead', description: 'Kuvaus kuolleista' },
+];
+
 const UserInteractions = ({
-  options,
   sliderValue,
   maxValue,
   handleSliderChange,
@@ -75,12 +89,13 @@ const UserInteractions = ({
   lastDate,
   selectedType,
 }: {
-  options: { name: string; description: string }[];
   sliderValue: number;
   maxValue: number;
   handleSliderChange: (event: any, newValue: number) => void;
   handleSliderStop: (event: any, value: number) => void;
-  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  handleTypeMenuClick: (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => void;
   handleTypeMenuItemClick: (index: number) => void;
   anchorEl: null | HTMLElement;
   startDate: Date;
@@ -91,7 +106,7 @@ const UserInteractions = ({
   const classes = useStyles();
 
   return (
-    <>
+    <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
       <Paper className={classes.interaction}>
         <Grid item container xs={9} style={{ marginRight: '25px' }}>
           <Grid item xs={12}>
@@ -160,7 +175,7 @@ const UserInteractions = ({
           </Grid>
         </Grid>
       </Paper>
-    </>
+    </Grid>
   );
 };
 

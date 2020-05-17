@@ -7,6 +7,7 @@ import TopCountries from './top-countries';
 import InfoBox from './infobox';
 import KeyNumbers from './keynumbers';
 import UserInteractions from './user-interactions';
+import { getDateObjects } from '../utils/getDateObjects';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -21,78 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const options = [
-  {
-    name: 'Active',
-    description:
-      'Active refers to positively tested cases that have not yet had an outcome, either recovery or death.',
-  },
-  {
-    name: 'Confirmed',
-    description:
-      'Confirmed means cases that have been tested positive. Actual number of cases is likely higher.',
-  },
-  { name: 'Recovered', description: 'Kuvaus parantuneista' },
-  { name: 'Dead', description: 'Kuvaus kuolleista' },
-];
-
-const getObjectByDate = (
-  coronaData: {
-    active: number;
-    confirmed: number;
-    country: string;
-    date: string;
-    deaths: number;
-    recovered: number;
-  }[],
-  endDate: Date
-) => {
-
-  const year = endDate.getFullYear();
-  const month = endDate.getMonth();
-  const day = endDate.getDate();
-  const formattedMonth = month < 10 ? `0${month + 1}` : `${month + 1}`;
-  const formattedDay = day < 10 ? `0${day}` : `${day}`;
-  
-  const parsedDate = `${year}-${formattedMonth}-${formattedDay}`;
-  console.log('parsed date', parsedDate);
-
-  const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
-
-  let activeSum = 0;
-  let confirmedSum = 0;
-  let recoveredSum = 0;
-  let deadSum = 0;
-  countriesByEndDate.forEach(country => {
-    activeSum += country.active;
-    confirmedSum += country.confirmed;
-    recoveredSum += country.recovered;
-    deadSum += country.deaths;
-  });
-  console.log('activesum', activeSum);
-  console.log('confirmedsum', confirmedSum);
-  console.log('recoveredsum', recoveredSum);
-  console.log('deadsum', deadSum);
-  return [
-            {
-              'name': 'Active',
-              'sum': activeSum,
-            },
-            {
-              'name': 'Confirmed',
-              'sum': confirmedSum,
-            },
-            {
-              'name': 'Recovered',
-              'sum': recoveredSum,
-            },
-            {
-              'name': 'Dead',
-              'sum': deadSum,
-            }
-          ]  
-};
-
 const Dashboard = () => {
   const classes = useStyles();
 
@@ -104,9 +33,7 @@ const Dashboard = () => {
     new Date()
   );
   // End date of timeframe user selects (defaults to max possible date)
-  const [endDate, setEndDate] = React.useState<Date>(
-    new Date()
-  );
+  const [endDate, setEndDate] = React.useState<Date>(new Date());
   // Start date of data and start date of timeframe (not possible to change)
   const [startDate, setStartDate] = React.useState<Date>(new Date());
 
@@ -123,26 +50,27 @@ const Dashboard = () => {
 
   const [keyNumbers, setKeyNumbers] = React.useState<
     {
-      'name': string,
-      'sum': number,
-    }[]>([
-      {
-        'name': 'Active',
-        'sum': 0,
-      },
-      {
-        'name': 'Confirmed',
-        'sum': 0,
-      },
-      {
-        'name': 'Recovered',
-        'sum': 0,
-      },
-      {
-        'name': 'Dead',
-        'sum': 0,
-      }
-    ])
+      name: string;
+      sum: number;
+    }[]
+  >([
+    {
+      name: 'Active',
+      sum: 0,
+    },
+    {
+      name: 'Confirmed',
+      sum: 0,
+    },
+    {
+      name: 'Recovered',
+      sum: 0,
+    },
+    {
+      name: 'Dead',
+      sum: 0,
+    },
+  ]);
 
   React.useEffect(() => {
     fetch('http://167.172.186.109:8080/api/all')
@@ -169,10 +97,9 @@ const Dashboard = () => {
         setSliderValue(differenceInDays);
         setPrevValue(differenceInDays);
         setCoronaData(data);
-        setKeyNumbers(getObjectByDate(data, lastDate));
+        setKeyNumbers(getDateObjects(data, lastDate));
       });
   }, []);
-
 
   const handleTypeMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -188,7 +115,6 @@ const Dashboard = () => {
   };
 
   const handleSliderStop = (event: any, value: number) => {
-
     let diff = prevValue - value;
     let newDate = new Date(endDate);
     let dateValue = 0;
@@ -197,7 +123,7 @@ const Dashboard = () => {
     setEndDate(newDate);
     setPrevValue(value);
 
-    setKeyNumbers(getObjectByDate(coronaData, newDate));
+    setKeyNumbers(getDateObjects(coronaData, newDate));
   };
 
   return (
@@ -205,10 +131,9 @@ const Dashboard = () => {
       {coronaData.length > 0 && (
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
-            <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType}/>
+            <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType} />
             <InfoBoxAndTopCountries />
-            <InteractionsSection
-              options={options}
+            <UserInteractions
               sliderValue={sliderValue}
               maxValue={maxValueOfSlider}
               handleSliderChange={handleSliderChange}
@@ -229,7 +154,8 @@ const Dashboard = () => {
 };
 
 const KeyNumbersAndMap = ({
-  keyNumbers, selected
+  keyNumbers,
+  selected,
 }: {
   keyNumbers: { name: string; sum: number }[];
   selected: number;
@@ -250,55 +176,6 @@ const InfoBoxAndTopCountries = () => {
       <Grid item container xs={3} spacing={3} style={{ margin: 0, padding: 0 }}>
         <InfoBox />
         <TopCountries />
-      </Grid>
-    </>
-  );
-};
-
-const InteractionsSection = ({
-  options,
-  sliderValue,
-  maxValue,
-  handleSliderChange,
-  handleSliderStop,
-  handleTypeMenuClick,
-  handleTypeMenuItemClick,
-  anchorEl,
-  startDate,
-  endDate,
-  lastDate,
-  selectedType,
-}: {
-  options: { name: string; description: string }[];
-  sliderValue: number;
-  maxValue: number;
-  handleSliderChange: (event: any, newValue: number) => void;
-  handleSliderStop: (event: any, value: number) => void;
-  handleTypeMenuClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  handleTypeMenuItemClick: (index: number) => void;
-  anchorEl: null | HTMLElement;
-  startDate: Date;
-  endDate: Date;
-  lastDate: Date;
-  selectedType: number;
-}) => {
-  return (
-    <>
-      <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
-        <UserInteractions
-          options={options}
-          sliderValue={sliderValue}
-          maxValue={maxValue}
-          handleSliderChange={handleSliderChange}
-          handleSliderStop={handleSliderStop}
-          handleTypeMenuClick={handleTypeMenuClick}
-          handleTypeMenuItemClick={handleTypeMenuItemClick}
-          anchorEl={anchorEl}
-          startDate={startDate}
-          endDate={endDate}
-          lastDate={lastDate}
-          selectedType={selectedType}
-        />
       </Grid>
     </>
   );
