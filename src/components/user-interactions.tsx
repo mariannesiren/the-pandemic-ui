@@ -108,73 +108,130 @@ const UserInteractions = ({
   return (
     <Grid item container xs={12} spacing={3} style={{ margin: 0 }}>
       <Paper className={classes.interaction}>
-        <Grid item container xs={9} style={{ marginRight: '25px' }}>
-          <Grid item xs={12}>
-            <Typography id="timeslider" gutterBottom>
-              Select timeframe:
-            </Typography>
-            <StyledSlider
-              value={sliderValue}
-              aria-labelledby="timeslider"
-              step={1}
-              max={maxValue}
-              onChange={handleSliderChange}
-              onChangeCommitted={handleSliderStop}
-            ></StyledSlider>
-          </Grid>
-          <Grid item xs={12}>
-            <Box display="flex">
-              <Box flexGrow={1}>
-                <Typography className={classes.sliderdate}>
-                  {startDate.toDateString()}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography className={classes.sliderdate}>
-                  {lastDate.toDateString()}
-                </Typography>
-              </Box>
-            </Box>
-            <Typography>Selected: {endDate.toDateString()}</Typography>
-          </Grid>
-        </Grid>
-        <Grid item container xs={3}>
-          <Grid item xs={12}>
-            <Typography id="typeselection" gutterBottom>
-              Select case type:
-            </Typography>
-            <Button
-              aria-controls="typemenu"
-              aria-labelledby="typeselection"
-              aria-haspopup="true"
-              onClick={handleTypeMenuClick}
-              className={classes.typebutton}
-              endIcon={<ExpandMore />}
-            >
-              {options[selectedType].name}
-            </Button>
-            <Menu
-              id="typemenu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-            >
-              {options.map((option, index) => (
-                <MenuItem
-                  key={option.name}
-                  selected={index === selectedType}
-                  onClick={() => handleTypeMenuItemClick(index)}
-                >
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Menu>
-            <Typography className={classes.description}>
-              {options[selectedType].description}
-            </Typography>
-          </Grid>
-        </Grid>
+        <TimeFrameSection
+          sliderValue={sliderValue}
+          maxValue={maxValue}
+          handleSliderChange={handleSliderChange}
+          handleSliderStop={handleSliderStop}
+          startDate={startDate}
+          endDate={endDate}
+          lastDate={lastDate}
+        />
+        <TypeMenuSection
+          handleTypeMenuClick={handleTypeMenuClick}
+          handleTypeMenuItemClick={handleTypeMenuItemClick}
+          anchorEl={anchorEl}
+          selectedType={selectedType}
+        />
       </Paper>
+    </Grid>
+  );
+};
+
+const TimeFrameSection = ({
+  sliderValue,
+  maxValue,
+  handleSliderChange,
+  handleSliderStop,
+  startDate,
+  endDate,
+  lastDate,
+}: {
+  sliderValue: number;
+  maxValue: number;
+  handleSliderChange: (event: any, newValue: number) => void;
+  handleSliderStop: (event: any, value: number) => void;
+  startDate: Date;
+  endDate: Date;
+  lastDate: Date;
+}) => {
+  const classes = useStyles();
+  return (
+    <Grid item container xs={9} style={{ marginRight: '25px' }}>
+      <Grid item xs={12}>
+        <Typography id="timeslider" gutterBottom>
+          Select timeframe:
+        </Typography>
+        <StyledSlider
+          value={sliderValue}
+          aria-labelledby="timeslider"
+          step={1}
+          max={maxValue}
+          onChange={handleSliderChange}
+          onChangeCommitted={handleSliderStop}
+        ></StyledSlider>
+      </Grid>
+      <Grid item xs={12}>
+        <Box display="flex">
+          <Box flexGrow={1}>
+            <Typography className={classes.sliderdate}>
+              {startDate.toDateString()}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography className={classes.sliderdate}>
+              {lastDate.toDateString()}
+            </Typography>
+          </Box>
+        </Box>
+        <Typography>Selected: {endDate.toDateString()}</Typography>
+      </Grid>
+    </Grid>
+  );
+};
+
+const TypeMenuSection = ({
+  handleTypeMenuClick,
+  handleTypeMenuItemClick,
+  anchorEl,
+  selectedType,
+}: {
+  handleTypeMenuClick: (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => void;
+  handleTypeMenuItemClick: (index: number) => void;
+  anchorEl: null | HTMLElement;
+
+  selectedType: number;
+}) => {
+  const classes = useStyles();
+
+  return (
+    <Grid item container xs={3}>
+      <Grid item xs={12}>
+        <Typography id="typeselection" gutterBottom>
+          Select case type:
+        </Typography>
+        <Button
+          aria-controls="typemenu"
+          aria-labelledby="typeselection"
+          aria-haspopup="true"
+          onClick={handleTypeMenuClick}
+          className={classes.typebutton}
+          endIcon={<ExpandMore />}
+        >
+          {options[selectedType].name}
+        </Button>
+        <Menu
+          id="typemenu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+        >
+          {options.map((option, index) => (
+            <MenuItem
+              key={option.name}
+              selected={index === selectedType}
+              onClick={() => handleTypeMenuItemClick(index)}
+            >
+              {option.name}
+            </MenuItem>
+          ))}
+        </Menu>
+        <Typography className={classes.description}>
+          {options[selectedType].description}
+        </Typography>
+      </Grid>
     </Grid>
   );
 };
