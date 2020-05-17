@@ -67,7 +67,7 @@ const Dashboard = () => {
       sum: 0,
     },
     {
-      name: 'Dead',
+      name: 'Deaths',
       sum: 0,
     },
   ]);
