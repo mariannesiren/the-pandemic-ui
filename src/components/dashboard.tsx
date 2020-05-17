@@ -7,6 +7,7 @@ import TopCountries from './top-countries';
 import InfoBox from './infobox';
 import KeyNumbers from './keynumbers';
 import UserInteractions from './user-interactions';
+import { getDateObjects } from '../utils/getDateObjects';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -35,63 +36,6 @@ const options = [
   { name: 'Recovered', description: 'Kuvaus parantuneista' },
   { name: 'Dead', description: 'Kuvaus kuolleista' },
 ];
-
-const getObjectByDate = (
-  coronaData: {
-    active: number;
-    confirmed: number;
-    country: string;
-    date: string;
-    deaths: number;
-    recovered: number;
-  }[],
-  endDate: Date
-) => {
-
-  const year = endDate.getFullYear();
-  const month = endDate.getMonth();
-  const day = endDate.getDate();
-  const formattedMonth = month < 10 ? `0${month + 1}` : `${month + 1}`;
-  const formattedDay = day < 10 ? `0${day}` : `${day}`;
-  
-  const parsedDate = `${year}-${formattedMonth}-${formattedDay}`;
-  console.log('parsed date', parsedDate);
-
-  const countriesByEndDate = coronaData.filter((data) => data.date.includes(parsedDate));
-
-  let activeSum = 0;
-  let confirmedSum = 0;
-  let recoveredSum = 0;
-  let deadSum = 0;
-  countriesByEndDate.forEach(country => {
-    activeSum += country.active;
-    confirmedSum += country.confirmed;
-    recoveredSum += country.recovered;
-    deadSum += country.deaths;
-  });
-  console.log('activesum', activeSum);
-  console.log('confirmedsum', confirmedSum);
-  console.log('recoveredsum', recoveredSum);
-  console.log('deadsum', deadSum);
-  return [
-            {
-              'name': 'Active',
-              'sum': activeSum,
-            },
-            {
-              'name': 'Confirmed',
-              'sum': confirmedSum,
-            },
-            {
-              'name': 'Recovered',
-              'sum': recoveredSum,
-            },
-            {
-              'name': 'Dead',
-              'sum': deadSum,
-            }
-          ]  
-};
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -169,7 +113,7 @@ const Dashboard = () => {
         setSliderValue(differenceInDays);
         setPrevValue(differenceInDays);
         setCoronaData(data);
-        setKeyNumbers(getObjectByDate(data, lastDate));
+        setKeyNumbers(getDateObjects(data, lastDate));
       });
   }, []);
 
@@ -197,7 +141,7 @@ const Dashboard = () => {
     setEndDate(newDate);
     setPrevValue(value);
 
-    setKeyNumbers(getObjectByDate(coronaData, newDate));
+    setKeyNumbers(getDateObjects(coronaData, newDate));
   };
 
   return (
