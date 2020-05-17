@@ -26,16 +26,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopCountries = () => {
+  const classes = useStyles();
 
-    const classes = useStyles();
-
-    return (
-        <Grid item xs={12} className={classes.container}>
-                <Paper className={classes.paper}>
-                  <Typography className={classes.heading}>Most cases per 1M people</Typography>
-                </Paper>
-        </Grid>
-    );
+  return (
+    <Grid item xs={12} className={classes.container}>
+      <Paper className={classes.paper}>
+        <Typography className={classes.heading}>
+          Most cases per 1M people
+        </Typography>
+      </Paper>
+    </Grid>
+  );
 };
 
 export default TopCountries;
