@@ -7,7 +7,7 @@ import TopCountries from './top-countries';
 import InfoBox from './infobox';
 import KeyNumbers from './keynumbers';
 import UserInteractions from './user-interactions';
-import { getDateObjects } from '../utils/getDateObjects';
+import { getCountryValuesByDate } from '../utils/get-country-values-by-date';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -97,7 +97,7 @@ const Dashboard = () => {
         setSliderValue(differenceInDays);
         setPrevValue(differenceInDays);
         setCoronaData(data);
-        setKeyNumbers(getDateObjects(data, lastDate));
+        setKeyNumbers(getCountryValuesByDate(data, lastDate));
       });
   }, []);
 
@@ -123,7 +123,7 @@ const Dashboard = () => {
     setEndDate(newDate);
     setPrevValue(value);
 
-    setKeyNumbers(getDateObjects(coronaData, newDate));
+    setKeyNumbers(getCountryValuesByDate(coronaData, newDate));
   };
 
   return (
