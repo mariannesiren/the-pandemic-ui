@@ -25,7 +25,7 @@ export const getTopCountriesByDate = (
     return 0;
   });
 
-  const topCountries = sortedCountries.slice(0, 15);
+  const topCountries = sortedCountries.slice(0, 10);
 
   const data = topCountries.map((country) => ({
     label: country.country,

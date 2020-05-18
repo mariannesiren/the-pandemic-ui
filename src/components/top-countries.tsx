@@ -69,14 +69,24 @@ const Chart = ({
       {
         label: `${options[selected].name.toLowerCase()}`,
         data: topCountries.map((country) => country.value),
+        barThickness: 13,
+        maxBarThickness: 13,
+        minBarLength: 2,
+        backgroundColor: '#444E86',
       },
     ],
   };
 
+  const chartOptions = {
+    legend:{
+      display: false
+  },
+  }
+
   console.log('topCountries', topCountries);
   return (
     <div>
-      <HorizontalBar data={dataset} />
+      <HorizontalBar data={dataset} height={300} options={chartOptions}/>
     </div>
   );
 };
