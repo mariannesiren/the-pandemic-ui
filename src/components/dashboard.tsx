@@ -131,7 +131,12 @@ const Dashboard = () => {
       {coronaData.length > 0 && (
         <Container className={classes.container}>
           <Grid container spacing={3} style={{ margin: 0 }}>
-            <KeyNumbersAndMap keyNumbers={keyNumbers} selected={selectedType} />
+            <KeyNumbersAndMap
+              coronaData={coronaData}
+              endDate={endDate}
+              keyNumbers={keyNumbers} 
+              selected={selectedType} 
+            />
             <InfoBoxAndTopCountries
               coronaData={coronaData}
               endDate={endDate}
@@ -160,15 +165,23 @@ const Dashboard = () => {
 const KeyNumbersAndMap = ({
   keyNumbers,
   selected,
+  coronaData,
+  endDate,
 }: {
   keyNumbers: { name: string; sum: number }[];
+  coronaData: [];
   selected: number;
+  endDate: Date;
 }) => {
   return (
     <>
       <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
         <KeyNumbers keyNumbers={keyNumbers} selected={selected} />
-        <WorldMap />
+        <WorldMap 
+          coronaData={coronaData}
+          endDate={endDate}
+          selected={selected}
+        />
       </Grid>
     </>
   );
