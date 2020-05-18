@@ -8,12 +8,14 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
+    height: 120,
   },
   highlighted: {
     padding: theme.spacing(2),
     textAlign: 'center',
     backgroundColor: '#FFA600',
     color: '#fff',
+    height: 120,
   },
   numbers: {
     fontSize: '1.7em',

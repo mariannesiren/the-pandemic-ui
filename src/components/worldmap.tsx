@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     mapContainer: {
-      height: 500,
+      height: 550,
       padding: theme.spacing(2),
     },
 }));
