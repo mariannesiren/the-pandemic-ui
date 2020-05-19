@@ -105,15 +105,15 @@ const Chart = ({
   };
 
   const chartOptions = {
-    legend:{
-      display: false
-  },
-  }
+    legend: {
+      display: false,
+    },
+  };
 
   console.log('topCountries', topCountries);
   return (
     <div>
-      <HorizontalBar data={dataset} height={300} options={chartOptions}/>
+      <HorizontalBar data={dataset} height={300} options={chartOptions} />
     </div>
   );
 };

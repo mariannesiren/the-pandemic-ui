@@ -134,8 +134,8 @@ const Dashboard = () => {
             <KeyNumbersAndMap
               coronaData={coronaData}
               endDate={endDate}
-              keyNumbers={keyNumbers} 
-              selected={selectedType} 
+              keyNumbers={keyNumbers}
+              selected={selectedType}
             />
             <InfoBoxAndTopCountries
               coronaData={coronaData}
@@ -177,7 +177,7 @@ const KeyNumbersAndMap = ({
     <>
       <Grid item container xs={9} spacing={3} style={{ margin: 0, padding: 0 }}>
         <KeyNumbers keyNumbers={keyNumbers} selected={selected} />
-        <WorldMap 
+        <WorldMap
           coronaData={coronaData}
           endDate={endDate}
           selected={selected}
