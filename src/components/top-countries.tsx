@@ -42,11 +42,34 @@ const TopCountries = ({
   return (
     <Grid item xs={12} className={classes.container}>
       <Paper className={classes.paper}>
-        <Typography className={classes.heading}>Most cases</Typography>
+        <Typography className={classes.heading}>
+          <Heading selected={selected} />
+        </Typography>
         <Chart coronaData={coronaData} endDate={endDate} selected={selected} />
       </Paper>
     </Grid>
   );
+};
+
+const Heading = ({ selected }: { selected: number }) => {
+  const selectedOption: string = options[selected].name;
+  const heading = setHeading(selectedOption);
+  return <>{heading}</>;
+};
+
+const setHeading = (selectedOption: string) => {
+  switch (selectedOption) {
+    case 'Active':
+      return 'Most active cases';
+    case 'Confirmed':
+      return 'Most confirmed cases';
+    case 'Deaths':
+      return 'Most deaths';
+    case 'Recovered':
+      return 'Most recoveries';
+    default:
+      return 'Most cases';
+  }
 };
 
 const Chart = ({
