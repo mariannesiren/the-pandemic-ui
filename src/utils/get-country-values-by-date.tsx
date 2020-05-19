@@ -40,7 +40,7 @@ export const getCountryValuesByDate = (
       sum: recoveredSum,
     },
     {
-      name: 'Dead',
+      name: 'Death',
       sum: deadSum,
     },
   ];
