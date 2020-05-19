@@ -58,10 +58,14 @@ const Chart = ({
   endDate: Date;
   selected: number;
 }) => {
-  const selectedType: string = options[selected].name.toLowerCase();
-  let s = selectedType as 'confirmed' | 'active' | 'deaths' | 'recovered';
+  const selectedOption: string = options[selected].name.toLowerCase();
+  const selectedType = selectedOption as
+    | 'confirmed'
+    | 'active'
+    | 'deaths'
+    | 'recovered';
 
-  const topCountries = getTopCountriesByDate(coronaData, endDate, s);
+  const topCountries = getTopCountriesByDate(coronaData, endDate, selectedType);
 
   const dataset = {
     labels: topCountries.map((country) => country.label),
