@@ -42,11 +42,34 @@ const TopCountries = ({
   return (
     <Grid item xs={12} className={classes.container}>
       <Paper className={classes.paper}>
-        <Typography className={classes.heading}>Most cases</Typography>
+        <Typography className={classes.heading}>
+          <Heading selected={selected} />
+        </Typography>
         <Chart coronaData={coronaData} endDate={endDate} selected={selected} />
       </Paper>
     </Grid>
   );
+};
+
+const Heading = ({ selected }: { selected: number }) => {
+  const selectedOption: string = options[selected].name;
+  const heading = setHeading(selectedOption);
+  return <>{heading}</>;
+};
+
+const setHeading = (selectedOption: string) => {
+  switch (selectedOption) {
+    case 'Active':
+      return 'Most active cases';
+    case 'Confirmed':
+      return 'Most confirmed cases';
+    case 'Deaths':
+      return 'Most deaths';
+    case 'Recovered':
+      return 'Most recoveries';
+    default:
+      return 'Most cases';
+  }
 };
 
 const Chart = ({
@@ -58,10 +81,14 @@ const Chart = ({
   endDate: Date;
   selected: number;
 }) => {
-  const selectedType: string = options[selected].name.toLowerCase();
-  let s = selectedType as 'confirmed' | 'active' | 'deaths' | 'recovered';
+  const selectedOption: string = options[selected].name.toLowerCase();
+  const selectedType = selectedOption as
+    | 'confirmed'
+    | 'active'
+    | 'deaths'
+    | 'recovered';
 
-  const topCountries = getTopCountriesByDate(coronaData, endDate, s);
+  const topCountries = getTopCountriesByDate(coronaData, endDate, selectedType);
 
   const dataset = {
     labels: topCountries.map((country) => country.label),
@@ -78,15 +105,15 @@ const Chart = ({
   };
 
   const chartOptions = {
-    legend:{
-      display: false
-  },
-  }
+    legend: {
+      display: false,
+    },
+  };
 
   console.log('topCountries', topCountries);
   return (
     <div>
-      <HorizontalBar data={dataset} height={300} options={chartOptions}/>
+      <HorizontalBar data={dataset} height={300} options={chartOptions} />
     </div>
   );
 };
