@@ -17,15 +17,15 @@
     "@material-ui/icons": "^4.9.1",
     "@types/material-ui": "^0.21.7",
     "@types/react-simple-maps": "^1.0.2",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.3.0",
     "chart.js": "^2.9.3",
-    "html-webpack-plugin": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
     "react-simple-maps": "^2.0.0",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^3.10.3"
   },
   "devDependencies": {
@@ -34,8 +34,8 @@
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "prettier": "2.0.4",
-    "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.2.2",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.2",
     "typescript": "^3.8.3"
   }
 }
